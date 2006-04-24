@@ -1,0 +1,1 @@
+A simple filter that takes in samples (time domain), passes them to modeled object (s-domain) and calculates response (time domain).
