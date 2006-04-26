@@ -15,7 +15,7 @@ public:
         std::string tmp;
         s>>tmp;
         for(int i=0;i<tmp.size();i++)
-            if((tmp[i]>='0' && tmp[i]<='9') || tmp[i]=='.' || tmp[i]==',')
+            if(((tmp[i]>='0' && tmp[i]<='9') || tmp[i]=='-') || tmp[i]=='.' || tmp[i]==',')
             {
                 if(tmp[i]==',')tmp[i]='.';
             }
