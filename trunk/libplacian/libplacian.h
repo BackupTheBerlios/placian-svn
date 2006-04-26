@@ -1,0 +1,6 @@
+#include "discrete_model.cpp"
+#include "fraction.cpp"
+#include "iprobe.cpp"
+#include "model.cpp"
+#include "poly.cpp"
+#include "discrete_borel.cpp"
