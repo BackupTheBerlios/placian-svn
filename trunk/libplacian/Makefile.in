@@ -127,6 +127,7 @@ libplacian_data = \
 	model.cpp		\
 	model.h			\
 	poly.cpp		\
+	libplacian.h		\
 	poly.h
 
 EXTRA_DIST = $(libplacian_data)
