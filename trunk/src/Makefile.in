@@ -138,7 +138,7 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-placian_SOURCES = main.cpp placian.h placian.cpp libplacian-impl.h
+placian_SOURCES = main.cpp placian.h placian.cpp
 all: all-am
 
 .SUFFIXES:

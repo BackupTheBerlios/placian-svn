@@ -1,10 +1,4 @@
-#include "libplacian-impl.h"
-#include <iostream>
-#include <vector>
-#include <string>
-#include <getopt.h>
-#include <sstream>
-#include <fstream>
+#include "placian.h"
 
 namespace placian{
 

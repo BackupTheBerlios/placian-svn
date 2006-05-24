@@ -1,4 +1,5 @@
-//#include "discrete_borel.h"
+#ifndef DISCRETE_BOREL_H
+#define DISCRETE_BOREL_H
 
 template<typename T,typename TMP>
 T discrete_borel(T &A,T &B,TMP step)
@@ -21,3 +22,5 @@ T discrete_borel(T &A,T &B,TMP step)
     }
     return res;
 }
+
+#endif //DISCRETE_BOREL_H

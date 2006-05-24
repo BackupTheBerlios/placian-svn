@@ -1,4 +1,4 @@
-#include "libplacian-impl.h"
+#include "../libplacian/libplacian.h"
 #include <iostream>
 #include <vector>
 #include <string>
@@ -20,4 +20,4 @@ void run();
 
 }   //end of placian namespace
 
-#endif
+#endif //PLACIAN_H
