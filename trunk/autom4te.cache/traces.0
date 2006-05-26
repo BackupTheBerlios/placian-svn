@@ -1,3 +1,87 @@
+m4trace:/usr/share/aclocal/pkg.m4:44: -1- AC_DEFUN([PKG_PROG_PKG_CONFIG], [m4_pattern_forbid([^_?PKG_[A-Z_]+$])
+m4_pattern_allow([^PKG_CONFIG(_PATH)?$])
+AC_ARG_VAR([PKG_CONFIG], [path to pkg-config utility])dnl
+if test "x$ac_cv_env_PKG_CONFIG_set" != "xset"; then
+	AC_PATH_TOOL([PKG_CONFIG], [pkg-config])
+fi
+if test -n "$PKG_CONFIG"; then
+	_pkg_min_version=m4_default([$1], [0.9.0])
+	AC_MSG_CHECKING([pkg-config is at least version $_pkg_min_version])
+	if $PKG_CONFIG --atleast-pkgconfig-version $_pkg_min_version; then
+		AC_MSG_RESULT([yes])
+	else
+		AC_MSG_RESULT([no])
+		PKG_CONFIG=""
+	fi
+		
+fi[]dnl
+])
+m4trace:/usr/share/aclocal/pkg.m4:63: -1- AC_DEFUN([PKG_CHECK_EXISTS], [AC_REQUIRE([PKG_PROG_PKG_CONFIG])dnl
+if test -n "$PKG_CONFIG" && \
+    AC_RUN_LOG([$PKG_CONFIG --exists --print-errors "$1"]); then
+  m4_ifval([$2], [$2], [:])
+m4_ifvaln([$3], [else
+  $3])dnl
+fi])
+m4trace:/usr/share/aclocal/pkg.m4:91: -1- AC_DEFUN([_PKG_SHORT_ERRORS_SUPPORTED], [AC_REQUIRE([PKG_PROG_PKG_CONFIG])
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi[]dnl
+])
+m4trace:/usr/share/aclocal/pkg.m4:156: -1- AC_DEFUN([PKG_CHECK_MODULES], [AC_REQUIRE([PKG_PROG_PKG_CONFIG])dnl
+AC_ARG_VAR([$1][_CFLAGS], [C compiler flags for $1, overriding pkg-config])dnl
+AC_ARG_VAR([$1][_LIBS], [linker flags for $1, overriding pkg-config])dnl
+
+pkg_failed=no
+AC_MSG_CHECKING([for $1])
+
+_PKG_CONFIG([$1][_CFLAGS], [cflags], [$2])
+_PKG_CONFIG([$1][_LIBS], [libs], [$2])
+
+m4_define([_PKG_TEXT], [Alternatively, you may set the environment variables $1[]_CFLAGS
+and $1[]_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.])
+
+if test $pkg_failed = yes; then
+        _PKG_SHORT_ERRORS_SUPPORTED
+        if test $_pkg_short_errors_supported = yes; then
+	        $1[]_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "$2"`
+        else 
+	        $1[]_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "$2"`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$$1[]_PKG_ERRORS" >&AS_MESSAGE_LOG_FD
+
+	ifelse([$4], , [AC_MSG_ERROR(dnl
+[Package requirements ($2) were not met:
+
+$$1_PKG_ERRORS
+
+Consider adjusting the PKG_CONFIG_PATH environment variable if you
+installed software in a non-standard prefix.
+
+_PKG_TEXT
+])],
+		[$4])
+elif test $pkg_failed = untried; then
+	ifelse([$4], , [AC_MSG_FAILURE(dnl
+[The pkg-config script could not be found or is too old.  Make sure it
+is in your PATH or set the PKG_CONFIG environment variable to the full
+path to pkg-config.
+
+_PKG_TEXT
+
+To get pkg-config, see <http://www.freedesktop.org/software/pkgconfig>.])],
+		[$4])
+else
+	$1[]_CFLAGS=$pkg_cv_[]$1[]_CFLAGS
+	$1[]_LIBS=$pkg_cv_[]$1[]_LIBS
+        AC_MSG_RESULT([yes])
+	ifelse([$3], , :, [$3])
+fi[]dnl
+])
 m4trace:/usr/share/aclocal-1.9/amversion.m4:13: -1- AC_DEFUN([AM_AUTOMAKE_VERSION], [am__api_version="1.9"])
 m4trace:/usr/share/aclocal-1.9/amversion.m4:20: -1- AC_DEFUN([AM_SET_CURRENT_AUTOMAKE_VERSION], [AM_AUTOMAKE_VERSION([1.9.6])])
 m4trace:/usr/share/aclocal-1.9/auxdir.m4:52: -1- AC_DEFUN([AM_AUX_DIR_EXPAND], [dnl Rely on autoconf to set up CDPATH properly.
@@ -484,7 +568,7 @@ AC_MSG_RESULT([$am_cv_prog_tar_$1])])
 AC_SUBST([am__tar])
 AC_SUBST([am__untar])
 ])
-m4trace:configure.in:1: -1- AC_INIT([src/main.cpp])
+m4trace:configure.in:1: -1- AC_INIT([placian], [0.1.0])
 m4trace:configure.in:1: -1- m4_pattern_forbid([^_?A[CHUM]_])
 m4trace:configure.in:1: -1- m4_pattern_forbid([_AC_])
 m4trace:configure.in:1: -1- m4_pattern_forbid([^LIBOBJS$], [do not use LIBOBJS directly, use AC_LIBOBJ (see section `AC_LIBOBJ vs LIBOBJS'])
@@ -537,7 +621,7 @@ m4trace:configure.in:1: -1- AC_SUBST([ECHO_C])
 m4trace:configure.in:1: -1- AC_SUBST([ECHO_N])
 m4trace:configure.in:1: -1- AC_SUBST([ECHO_T])
 m4trace:configure.in:1: -1- AC_SUBST([LIBS])
-m4trace:configure.in:2: -1- AM_INIT_AUTOMAKE([placian], [0.1.0])
+m4trace:configure.in:2: -1- AM_INIT_AUTOMAKE([0.1.0])
 m4trace:configure.in:2: -1- m4_pattern_allow([^AM_[A-Z]+FLAGS$])
 m4trace:configure.in:2: -1- AM_SET_CURRENT_AUTOMAKE_VERSION
 m4trace:configure.in:2: -1- AM_AUTOMAKE_VERSION([1.9.6])
@@ -546,8 +630,11 @@ m4trace:configure.in:2: -1- AC_SUBST([INSTALL_PROGRAM])
 m4trace:configure.in:2: -1- AC_SUBST([INSTALL_SCRIPT])
 m4trace:configure.in:2: -1- AC_SUBST([INSTALL_DATA])
 m4trace:configure.in:2: -1- AC_SUBST([CYGPATH_W])
-m4trace:configure.in:2: -1- AC_SUBST([PACKAGE], [placian])
-m4trace:configure.in:2: -1- AC_SUBST([VERSION], [0.1.0])
+m4trace:configure.in:2: -1- _AM_SET_OPTIONS([0.1.0])
+m4trace:configure.in:2: -1- _AM_SET_OPTION([0.1.0])
+m4trace:configure.in:2: -2- _AM_MANGLE_OPTION([0.1.0])
+m4trace:configure.in:2: -1- AC_SUBST([PACKAGE], ['AC_PACKAGE_TARNAME'])
+m4trace:configure.in:2: -1- AC_SUBST([VERSION], ['AC_PACKAGE_VERSION'])
 m4trace:configure.in:2: -1- _AM_IF_OPTION([no-define], [], [AC_DEFINE_UNQUOTED(PACKAGE, "$PACKAGE", [Name of package])
  AC_DEFINE_UNQUOTED(VERSION, "$VERSION", [Version number of package])])
 m4trace:configure.in:2: -2- _AM_MANGLE_OPTION([no-define])
@@ -675,10 +762,30 @@ m4trace:configure.in:11: -1- AH_OUTPUT([HAVE_STDINT_H], [/* Define to 1 if you h
 #undef HAVE_STDINT_H])
 m4trace:configure.in:11: -1- AH_OUTPUT([HAVE_UNISTD_H], [/* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H])
-m4trace:configure.in:14: -1- AC_CONFIG_FILES([Makefile src/Makefile libplacian/Makefile])
-m4trace:configure.in:14: -1- _m4_warn([obsolete], [AC_OUTPUT should be used without arguments.
-You should run autoupdate.], [])
-m4trace:configure.in:14: -1- AC_SUBST([LIB@&t@OBJS], [$ac_libobjs])
-m4trace:configure.in:14: -1- AC_SUBST([LTLIBOBJS], [$ac_ltlibobjs])
-m4trace:configure.in:14: -1- _AC_AM_CONFIG_HEADER_HOOK([$ac_file])
-m4trace:configure.in:14: -1- _AM_OUTPUT_DEPENDENCY_COMMANDS
+m4trace:configure.in:13: -1- PKG_CHECK_MODULES([GTK], [gtk+-2.0 >= 2.8.0])
+m4trace:configure.in:13: -1- PKG_PROG_PKG_CONFIG
+m4trace:configure.in:13: -1- m4_pattern_forbid([^_?PKG_[A-Z_]+$])
+m4trace:configure.in:13: -1- m4_pattern_allow([^PKG_CONFIG(_PATH)?$])
+m4trace:configure.in:13: -1- AC_SUBST([PKG_CONFIG])
+m4trace:configure.in:13: -1- AC_SUBST([PKG_CONFIG], [$ac_cv_path_PKG_CONFIG])
+m4trace:configure.in:13: -1- AC_SUBST([ac_pt_PKG_CONFIG], [$ac_cv_path_ac_pt_PKG_CONFIG])
+m4trace:configure.in:13: -1- AC_SUBST([GTK_CFLAGS])
+m4trace:configure.in:13: -1- AC_SUBST([GTK_LIBS])
+m4trace:configure.in:13: -1- PKG_CHECK_EXISTS([gtk+-2.0 >= 2.8.0], [pkg_cv_[]GTK_CFLAGS=`$PKG_CONFIG --[]cflags "gtk+-2.0 >= 2.8.0" 2>/dev/null`], [pkg_failed=yes])
+m4trace:configure.in:13: -1- PKG_CHECK_EXISTS([gtk+-2.0 >= 2.8.0], [pkg_cv_[]GTK_LIBS=`$PKG_CONFIG --[]libs "gtk+-2.0 >= 2.8.0" 2>/dev/null`], [pkg_failed=yes])
+m4trace:configure.in:13: -1- _PKG_SHORT_ERRORS_SUPPORTED
+m4trace:configure.in:14: -1- PKG_CHECK_MODULES([CAIRO], [cairo])
+m4trace:configure.in:14: -1- AC_SUBST([CAIRO_CFLAGS])
+m4trace:configure.in:14: -1- AC_SUBST([CAIRO_LIBS])
+m4trace:configure.in:14: -1- PKG_CHECK_EXISTS([cairo], [pkg_cv_[]CAIRO_CFLAGS=`$PKG_CONFIG --[]cflags "cairo" 2>/dev/null`], [pkg_failed=yes])
+m4trace:configure.in:14: -1- PKG_CHECK_EXISTS([cairo], [pkg_cv_[]CAIRO_LIBS=`$PKG_CONFIG --[]libs "cairo" 2>/dev/null`], [pkg_failed=yes])
+m4trace:configure.in:14: -1- _PKG_SHORT_ERRORS_SUPPORTED
+m4trace:configure.in:23: -1- AC_CONFIG_FILES([
+	Makefile 
+	src/Makefile 
+	libplacian/Makefile
+])
+m4trace:configure.in:25: -1- AC_SUBST([LIB@&t@OBJS], [$ac_libobjs])
+m4trace:configure.in:25: -1- AC_SUBST([LTLIBOBJS], [$ac_ltlibobjs])
+m4trace:configure.in:25: -1- _AC_AM_CONFIG_HEADER_HOOK([$ac_file])
+m4trace:configure.in:25: -1- _AM_OUTPUT_DEPENDENCY_COMMANDS
