@@ -16,11 +16,8 @@ PARAMETRS:\n\
   --freq <Hz>			sample rate (short -f | optional)\n\
   --delay <s>			delay time (short -D | optional)\n\
 \n\
-OPTIONS(disabled):\n\
-  --dirac			impulse response (algebraically)\n\
-  --step			step response (algebraically)\n\
-  --equations			display equations\n\
-  --no-key			no keyboard input\n\
+OPTIONS:\n\
+  --gtk-plot			draws gtk-plot\n\
   --dir				target directory for output"<<std::endl;
 }
 
@@ -32,11 +29,11 @@ static option long_options[] = {
     {"amplification", 1, 0, 'a'},
     {"freq", 1, 0, 'f'},
     {"delay", 1, 0, 'D'},
-    {"dirac", 0, 0, 100},
-    {"step", 0, 0, 101},
-    {"equations", 0, 0, 102},
-    {"no-key", 0, 0, 103},
-    {"dir", 1, 0, 104},
+    {"gtk-plot", 0, 0, 300},
+    //{"step", 0, 0, 101},
+    //{"equations", 0, 0, 102},
+    //{"no-key", 0, 0, 103},
+    //{"dir", 1, 0, 104},
     {"help", 0, 0, 'h'},
     {0, 0, 0, 0}
 };
@@ -48,9 +45,9 @@ double k=1,freq=10,delay=0;
 std::string num,denum,amp,fr,de;
 std::vector<std::string> infile;
 
-bool dirac = 0;
-bool step  = 0;
-bool equations = 0;
+bool gtk_gui = 0;
+//bool step  = 0;
+//bool equations = 0;
 bool keyboard = 1;
 
 
@@ -84,6 +81,9 @@ void init(int argc,char **argv)
         case 'D':
             de = optarg;
             break;
+	case 300:
+	    gtk_gui = true;
+	    break;
         case '?':
             showhelp();
             exit(0);

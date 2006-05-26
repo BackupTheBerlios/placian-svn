@@ -18,6 +18,9 @@ std::vector<double> readfromstream(iprobe<double>&, model<double>&, std::istream
 void writetostream(std::vector<double> &x, std::vector<double> &y, std::ostream &output);
 void run();
 
+extern bool gtk_gui;
+extern bool keyboard;
+
 }   //end of placian namespace
 
 #endif //PLACIAN_H
