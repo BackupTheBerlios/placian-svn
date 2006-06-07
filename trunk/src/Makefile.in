@@ -47,13 +47,15 @@ CONFIG_CLEAN_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 binPROGRAMS_INSTALL = $(INSTALL_PROGRAM)
 PROGRAMS = $(bin_PROGRAMS)
-am_gplacian_OBJECTS = gplacian-gplacian.$(OBJEXT)
+am_gplacian_OBJECTS = gplacian-gplacian.$(OBJEXT) \
+	gplacian-gplacian-test.$(OBJEXT)
 gplacian_OBJECTS = $(am_gplacian_OBJECTS)
 am__DEPENDENCIES_1 =
 gplacian_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
-am_placian_OBJECTS = main.$(OBJEXT) placian.$(OBJEXT)
+am_placian_OBJECTS = placian-main.$(OBJEXT) placian-placian.$(OBJEXT) \
+	placian-gplacian.$(OBJEXT)
 placian_OBJECTS = $(am_placian_OBJECTS)
-placian_LDADD = $(LDADD)
+placian_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 DEFAULT_INCLUDES = -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
@@ -148,7 +150,7 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-gplacian_SOURCES = gplacian.cpp gplacian.h
+gplacian_SOURCES = gplacian.cpp gplacian-test.cpp gplacian.h
 gplacian_CXXFLAGS = \
 	$(GTK_CFLAGS)	\
 	$(CAIRO_CFLAGS)
@@ -157,7 +159,15 @@ gplacian_LDADD = \
 	$(GTK_LIBS)	\
 	$(CAIRO_LIBS)
 
-placian_SOURCES = main.cpp placian.h placian.cpp
+placian_SOURCES = main.cpp placian.h placian.cpp gplacian.cpp gplacian.h
+placian_CXXFLAGS = \
+	$(GTK_CFLAGS)	\
+	$(CAIRO_CFLAGS)
+
+placian_LDADD = \
+	$(GTK_LIBS)	\
+	$(CAIRO_LIBS)
+
 all: all-am
 
 .SUFFIXES:
@@ -227,9 +237,11 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gplacian-gplacian-test.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gplacian-gplacian.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/main.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/placian.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/placian-gplacian.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/placian-main.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/placian-placian.Po@am__quote@
 
 .cpp.o:
 @am__fastdepCXX_TRUE@	if $(CXXCOMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" -c -o $@ $<; \
@@ -258,6 +270,62 @@ gplacian-gplacian.obj: gplacian.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gplacian.cpp' object='gplacian-gplacian.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(gplacian_CXXFLAGS) $(CXXFLAGS) -c -o gplacian-gplacian.obj `if test -f 'gplacian.cpp'; then $(CYGPATH_W) 'gplacian.cpp'; else $(CYGPATH_W) '$(srcdir)/gplacian.cpp'; fi`
+
+gplacian-gplacian-test.o: gplacian-test.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(gplacian_CXXFLAGS) $(CXXFLAGS) -MT gplacian-gplacian-test.o -MD -MP -MF "$(DEPDIR)/gplacian-gplacian-test.Tpo" -c -o gplacian-gplacian-test.o `test -f 'gplacian-test.cpp' || echo '$(srcdir)/'`gplacian-test.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/gplacian-gplacian-test.Tpo" "$(DEPDIR)/gplacian-gplacian-test.Po"; else rm -f "$(DEPDIR)/gplacian-gplacian-test.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gplacian-test.cpp' object='gplacian-gplacian-test.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(gplacian_CXXFLAGS) $(CXXFLAGS) -c -o gplacian-gplacian-test.o `test -f 'gplacian-test.cpp' || echo '$(srcdir)/'`gplacian-test.cpp
+
+gplacian-gplacian-test.obj: gplacian-test.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(gplacian_CXXFLAGS) $(CXXFLAGS) -MT gplacian-gplacian-test.obj -MD -MP -MF "$(DEPDIR)/gplacian-gplacian-test.Tpo" -c -o gplacian-gplacian-test.obj `if test -f 'gplacian-test.cpp'; then $(CYGPATH_W) 'gplacian-test.cpp'; else $(CYGPATH_W) '$(srcdir)/gplacian-test.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/gplacian-gplacian-test.Tpo" "$(DEPDIR)/gplacian-gplacian-test.Po"; else rm -f "$(DEPDIR)/gplacian-gplacian-test.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gplacian-test.cpp' object='gplacian-gplacian-test.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(gplacian_CXXFLAGS) $(CXXFLAGS) -c -o gplacian-gplacian-test.obj `if test -f 'gplacian-test.cpp'; then $(CYGPATH_W) 'gplacian-test.cpp'; else $(CYGPATH_W) '$(srcdir)/gplacian-test.cpp'; fi`
+
+placian-main.o: main.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(placian_CXXFLAGS) $(CXXFLAGS) -MT placian-main.o -MD -MP -MF "$(DEPDIR)/placian-main.Tpo" -c -o placian-main.o `test -f 'main.cpp' || echo '$(srcdir)/'`main.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/placian-main.Tpo" "$(DEPDIR)/placian-main.Po"; else rm -f "$(DEPDIR)/placian-main.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='main.cpp' object='placian-main.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(placian_CXXFLAGS) $(CXXFLAGS) -c -o placian-main.o `test -f 'main.cpp' || echo '$(srcdir)/'`main.cpp
+
+placian-main.obj: main.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(placian_CXXFLAGS) $(CXXFLAGS) -MT placian-main.obj -MD -MP -MF "$(DEPDIR)/placian-main.Tpo" -c -o placian-main.obj `if test -f 'main.cpp'; then $(CYGPATH_W) 'main.cpp'; else $(CYGPATH_W) '$(srcdir)/main.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/placian-main.Tpo" "$(DEPDIR)/placian-main.Po"; else rm -f "$(DEPDIR)/placian-main.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='main.cpp' object='placian-main.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(placian_CXXFLAGS) $(CXXFLAGS) -c -o placian-main.obj `if test -f 'main.cpp'; then $(CYGPATH_W) 'main.cpp'; else $(CYGPATH_W) '$(srcdir)/main.cpp'; fi`
+
+placian-placian.o: placian.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(placian_CXXFLAGS) $(CXXFLAGS) -MT placian-placian.o -MD -MP -MF "$(DEPDIR)/placian-placian.Tpo" -c -o placian-placian.o `test -f 'placian.cpp' || echo '$(srcdir)/'`placian.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/placian-placian.Tpo" "$(DEPDIR)/placian-placian.Po"; else rm -f "$(DEPDIR)/placian-placian.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='placian.cpp' object='placian-placian.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(placian_CXXFLAGS) $(CXXFLAGS) -c -o placian-placian.o `test -f 'placian.cpp' || echo '$(srcdir)/'`placian.cpp
+
+placian-placian.obj: placian.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(placian_CXXFLAGS) $(CXXFLAGS) -MT placian-placian.obj -MD -MP -MF "$(DEPDIR)/placian-placian.Tpo" -c -o placian-placian.obj `if test -f 'placian.cpp'; then $(CYGPATH_W) 'placian.cpp'; else $(CYGPATH_W) '$(srcdir)/placian.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/placian-placian.Tpo" "$(DEPDIR)/placian-placian.Po"; else rm -f "$(DEPDIR)/placian-placian.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='placian.cpp' object='placian-placian.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(placian_CXXFLAGS) $(CXXFLAGS) -c -o placian-placian.obj `if test -f 'placian.cpp'; then $(CYGPATH_W) 'placian.cpp'; else $(CYGPATH_W) '$(srcdir)/placian.cpp'; fi`
+
+placian-gplacian.o: gplacian.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(placian_CXXFLAGS) $(CXXFLAGS) -MT placian-gplacian.o -MD -MP -MF "$(DEPDIR)/placian-gplacian.Tpo" -c -o placian-gplacian.o `test -f 'gplacian.cpp' || echo '$(srcdir)/'`gplacian.cpp; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/placian-gplacian.Tpo" "$(DEPDIR)/placian-gplacian.Po"; else rm -f "$(DEPDIR)/placian-gplacian.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gplacian.cpp' object='placian-gplacian.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(placian_CXXFLAGS) $(CXXFLAGS) -c -o placian-gplacian.o `test -f 'gplacian.cpp' || echo '$(srcdir)/'`gplacian.cpp
+
+placian-gplacian.obj: gplacian.cpp
+@am__fastdepCXX_TRUE@	if $(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(placian_CXXFLAGS) $(CXXFLAGS) -MT placian-gplacian.obj -MD -MP -MF "$(DEPDIR)/placian-gplacian.Tpo" -c -o placian-gplacian.obj `if test -f 'gplacian.cpp'; then $(CYGPATH_W) 'gplacian.cpp'; else $(CYGPATH_W) '$(srcdir)/gplacian.cpp'; fi`; \
+@am__fastdepCXX_TRUE@	then mv -f "$(DEPDIR)/placian-gplacian.Tpo" "$(DEPDIR)/placian-gplacian.Po"; else rm -f "$(DEPDIR)/placian-gplacian.Tpo"; exit 1; fi
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	source='gplacian.cpp' object='placian-gplacian.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(placian_CXXFLAGS) $(CXXFLAGS) -c -o placian-gplacian.obj `if test -f 'gplacian.cpp'; then $(CYGPATH_W) 'gplacian.cpp'; else $(CYGPATH_W) '$(srcdir)/gplacian.cpp'; fi`
 uninstall-info-am:
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)

@@ -1,3 +1,5 @@
+#include <gtk/gtk.h>
+#include <cairo.h>
 #include <vector>
 
 #ifndef GPLACIAN_H
@@ -8,6 +10,8 @@
 #endif
 
 namespace gplacian{
+
+int run(std::vector<double>&, std::vector<double>&);
 
 template<typename T>
 class gCairoPlot{
@@ -23,8 +27,8 @@ class gCairoPlot{
         {
             tmp.min=tmp.max=z[0];
             for(int i=1;i<z.size();i++)
-                if(z[i]<tmp.max)tmp.max = z[i];
-                else if(z[i]>tmp.min)tmp.min = z[i];
+                if(z[i]>tmp.max)tmp.max = z[i];
+                else if(z[i]<tmp.min)tmp.min = z[i];
         }
         return tmp;
     }
@@ -188,16 +192,8 @@ void gCairoPlot<T>::draw_points()
 static void
 draw (cairo_t *cr, int width, int height, std::vector<double> x, std::vector<double> y)
 {
-    //generating cube function in order to test plot class
-    //std::vector<double> x,y;
-    //for(double i=-5;i<=5;i+=0.1)
-    //{
-    //   x.push_back(i);
-    //    y.push_back((i+2)*(i-3)*(i-4));
-    //}
-
+    
     gCairoPlot<double>(cr,width,height,&x,&y).draw();
-
 
 }
 

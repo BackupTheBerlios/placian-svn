@@ -1,6 +1,3 @@
-#include <gtk/gtk.h>
-#include <cairo.h>
-#include <iostream>
 #include "gplacian.h"
 
 namespace gplacian{
@@ -112,17 +109,4 @@ run(std::vector<double> &x, std::vector<double> &y)
 
 }  //end of gplacian namespace
 
-int
-main (int argc, char **argv)
-{
-    gtk_init (&argc, &argv);
-    
-    std::vector<double> x,y;
-    for(double i=-5;i<=5;i+=0.1)
-    {
-        x.push_back(i);
-        y.push_back((i+2)*(i-3)*(i-4));
-    }
 
-    return gplacian::run(x,y);
-}

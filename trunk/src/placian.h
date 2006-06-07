@@ -1,4 +1,6 @@
 #include "../libplacian/libplacian.h"
+#include "gplacian.h"
+
 #include <iostream>
 #include <vector>
 #include <string>

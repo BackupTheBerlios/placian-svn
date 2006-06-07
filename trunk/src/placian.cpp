@@ -137,8 +137,17 @@ std::vector<double> readfromstream(iprobe<double> &x, model<double> &g,std::istr
 void writetostream(std::vector<double> &x, std::vector<double> &y, std::ostream &output)
 {
     if(x.size()!=y.size())abort();
+
+    std::vector<double> t;
+    for(int i=0;i<x.size();i++)t.push_back(i/freq);
+    
     for(int i=0;i<x.size();i++)
-        output<<x[i]<<"\t"<<y[i]<<std::endl;
+        output<<t[i]<<"\t"<<y[i]<<std::endl;
+        
+    if(placian::gtk_gui)
+    {
+    	gplacian::run(t,y);
+    }
 }
 
 
