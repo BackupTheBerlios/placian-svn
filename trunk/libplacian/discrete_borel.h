@@ -10,11 +10,11 @@ T discrete_borel(T &A,T &B,TMP step)
     for(int i=0;i<A.size();i++)
     {
         T surf; //surface points
-        for(int j=0;j<i;j++)
+        for(int j=0;j<=i && i;j++)
             surf.push_back(A[j]*B[i-j]);
 
         //integrating
-        for(int j=0;(j<surf.size()-1) && surf.size();j++)
+        for(int j=0;(j<surf.size()) && surf.size();j++)
 	    tmp+=step*(surf[j]+surf[j+1])/2;
 
         res.push_back(tmp);
