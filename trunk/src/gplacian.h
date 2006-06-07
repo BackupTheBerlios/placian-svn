@@ -186,15 +186,15 @@ void gCairoPlot<T>::draw_points()
 //----------------------------------
 
 static void
-draw (cairo_t *cr, int width, int height)
+draw (cairo_t *cr, int width, int height, std::vector<double> x, std::vector<double> y)
 {
     //generating cube function in order to test plot class
-    std::vector<double> x,y;
-    for(double i=-5;i<=5;i+=0.1)
-    {
-        x.push_back(i);
-        y.push_back((i+2)*(i-3)*(i-4));
-    }
+    //std::vector<double> x,y;
+    //for(double i=-5;i<=5;i+=0.1)
+    //{
+    //   x.push_back(i);
+    //    y.push_back((i+2)*(i-3)*(i-4));
+    //}
 
     gCairoPlot<double>(cr,width,height,&x,&y).draw();
 

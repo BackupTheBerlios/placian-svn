@@ -12,13 +12,11 @@ HELP:\n\
 PARAMETRS:\n\
   --numerator <...>		numerator parametrs (short -n)\n\
   --denumerator	<...>           denumerator parametrs (short -d)\n\
-  --amplification <k>		amplification rate (short -a | optional)\n\
-  --freq <Hz>			sample rate (short -f | optional)\n\
-  --delay <s>			delay time (short -D | optional)\n\
+  --amplification <k>		amplification rate (short -a | default 1)\n\
+  --freq <Hz>			sample rate (short -f | default 10)\n\
 \n\
 OPTIONS:\n\
-  --gtk-plot			draws gtk-plot\n\
-  --dir				target directory for output"<<std::endl;
+  --gtk-plot			draws gtk-plot\n"<<std::endl;
 }
 
 //PARAMS
@@ -28,26 +26,19 @@ static option long_options[] = {
     {"denumerator", 1, 0, 'd'},
     {"amplification", 1, 0, 'a'},
     {"freq", 1, 0, 'f'},
-    {"delay", 1, 0, 'D'},
     {"gtk-plot", 0, 0, 300},
-    //{"step", 0, 0, 101},
-    //{"equations", 0, 0, 102},
-    //{"no-key", 0, 0, 103},
-    //{"dir", 1, 0, 104},
     {"help", 0, 0, 'h'},
     {0, 0, 0, 0}
 };
 
 //MODEL SETTINGS
 std::vector<double> N,D;
-double k=1,freq=10,delay=0;
+double k=1,freq=10;
 
-std::string num,denum,amp,fr,de;
+std::string num,denum,amp,fr;
 std::vector<std::string> infile;
 
 bool gtk_gui = 0;
-//bool step  = 0;
-//bool equations = 0;
 bool keyboard = 1;
 
 
@@ -77,9 +68,6 @@ void init(int argc,char **argv)
             break;
         case 'f':
             fr = optarg;
-            break;
-        case 'D':
-            de = optarg;
             break;
 	case 300:
 	    gtk_gui = true;
@@ -134,12 +122,6 @@ void init(int argc,char **argv)
         while(str>>freq);
     }
 
-    if(de.size())
-    {
-        str.str(de);
-        while(str>>freq);
-        str.clear();
-    }
 }
 
 std::vector<double> readfromstream(iprobe<double> &x, model<double> &g,std::istream &input)

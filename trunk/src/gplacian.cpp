@@ -1,5 +1,6 @@
 #include <gtk/gtk.h>
 #include <cairo.h>
+#include <iostream>
 #include "gplacian.h"
 
 namespace gplacian{
@@ -64,9 +65,15 @@ handle_expose (GtkWidget      *widget,
 {
     cairo_t *cr;
 
+    //gpointer - contains to vectors thus vector of vector container needed
+    std::vector< std::vector<double> > *wsk;
+    wsk = (std::vector< std::vector<double> >*)data;
+
+    //std::cout<<*wsk<<"@"<<wsk<<std::endl;
+
     cr = gdk_cairo_create (widget->window);
 
-    draw (cr, widget->allocation.width, widget->allocation.height);
+    draw (cr, widget->allocation.width, widget->allocation.height,(*wsk)[0],(*wsk)[1]);
 
     cairo_destroy (cr);
 
@@ -74,11 +81,13 @@ handle_expose (GtkWidget      *widget,
 }
 
 int
-run (int argc, char **argv)
+run(std::vector<double> &x, std::vector<double> &y)
 {
-    GtkWidget *window, *drawing_area;
+    std::vector< std::vector<double> > A;	//must create container for 2 variables as gpointer can be only one
+    A.push_back(x);
+    A.push_back(y);
 
-    gtk_init (&argc, &argv);
+    GtkWidget *window, *drawing_area;
 
     window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
@@ -92,7 +101,7 @@ run (int argc, char **argv)
     gtk_container_add (GTK_CONTAINER (window), drawing_area);
 
     g_signal_connect (drawing_area, "expose-event",
-		      G_CALLBACK (handle_expose), NULL);
+		      G_CALLBACK (handle_expose), gpointer(&A));
 
     gtk_widget_show_all (window);
 
@@ -106,5 +115,14 @@ run (int argc, char **argv)
 int
 main (int argc, char **argv)
 {
-    return gplacian::run(argc,argv);
+    gtk_init (&argc, &argv);
+    
+    std::vector<double> x,y;
+    for(double i=-5;i<=5;i+=0.1)
+    {
+        x.push_back(i);
+        y.push_back((i+2)*(i-3)*(i-4));
+    }
+
+    return gplacian::run(x,y);
 }
