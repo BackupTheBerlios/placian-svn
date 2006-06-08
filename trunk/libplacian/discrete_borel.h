@@ -9,15 +9,18 @@ T discrete_borel(T &A,T &B,TMP step)
     TMP tmp=0;
     for(int i=0;i<A.size();i++)
     {
-        T surf; //surface points
+        T surf; //creating surface points
         for(int j=0;j<=i && i;j++)
-            surf.push_back(A[j]*B[i-j]);
+            surf.push_back(A[j]*B[i-j]);	//borel goes here
 
-        //integrating
-        for(int j=0;(j<surf.size()) && surf.size();j++)
-	    tmp+=step*(surf[j]+surf[j+1])/2;
+        //integrating with trapezoid method
+        if(surf.size()>1)
+        {
+        	tmp = (surf[0] + surf[i])*0.5;
+        	for(int j=1;j<i;j++)tmp+=surf[j];
+        }
 
-        res.push_back(tmp);
+        res.push_back(tmp*step);
         tmp=0;
     }
     return res;
