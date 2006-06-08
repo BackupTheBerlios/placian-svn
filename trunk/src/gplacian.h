@@ -1,6 +1,8 @@
 #include <gtk/gtk.h>
 #include <cairo.h>
 #include <vector>
+#include <string>
+#include <sstream>
 
 #ifndef GPLACIAN_H
 #define GPLACIAN_H
@@ -12,6 +14,14 @@
 namespace gplacian{
 
 int run(std::vector<double>&, std::vector<double>&);
+
+template<typename T>
+std::string t2string(const T &x)
+{
+    std::ostringstream stream;
+    stream << x;
+    return stream.str();
+}
 
 template<typename T>
 class gCairoPlot{
@@ -139,31 +149,43 @@ void gCairoPlot<T>::draw_scene()
     //cairo_set_dash(cr, dashes,0,1);
 
     cairo_stroke (cr);
-    
-    
+
+
     if(x && y) //then draw axis min and max
     {
 	cairo_scale (cr, 1, 1);
 	cairo_select_font_face (cr, "Sans", CAIRO_FONT_SLANT_NORMAL,CAIRO_FONT_WEIGHT_BOLD);
 	cairo_set_font_size (cr, 12);
-		   
+
 	cairo_move_to (cr, BORDER  ,BORDER/2);
 	cairo_show_text (cr, "gPlacian Plot");
-	
+
 	cairo_move_to (cr, width-BORDER-10, height-BORDER/2);
 	cairo_show_text (cr, "t");
-				   
+
 	cairo_move_to (cr, BORDER*1/4, BORDER*3/2);
 	cairo_show_text (cr, "y(t)");
+
+	//DRAWING MIN MAX
+	cairo_move_to (cr, width/4, height - BORDER*1/2 - 5);
+	cairo_show_text (cr, "Dt = [");
+	cairo_show_text (cr, t2string<double>(OX.min).c_str());
+    cairo_show_text (cr, " ; ");
+	cairo_show_text (cr, t2string<double>(OX.max).c_str());
+	cairo_show_text (cr, "]");
+
+	cairo_move_to (cr, width/4, height - 5);
+	cairo_show_text (cr, "Dy = [");
+	cairo_show_text (cr, t2string<double>(OY.min).c_str());
+    cairo_show_text (cr, " ; ");
+	cairo_show_text (cr, t2string<double>(OY.max).c_str());
+	cairo_show_text (cr, "]");
 
 	cairo_set_source_rgb (cr, 0.5, 0.5, 1);
 	cairo_fill_preserve (cr);
 	cairo_set_source_rgb (cr, 0.5, 0.5, 0.5);
 	cairo_set_line_width (cr, 3);
 	cairo_stroke (cr);
-	
-	//cairo_move_to (cr, 100, 100);
-	//cairo_show_text (cr, "gPlacian Plot");
     }
 
 }
@@ -192,7 +214,7 @@ void gCairoPlot<T>::draw_points()
 static void
 draw (cairo_t *cr, int width, int height, std::vector<double> x, std::vector<double> y)
 {
-    
+
     gCairoPlot<double>(cr,width,height,&x,&y).draw();
 
 }
